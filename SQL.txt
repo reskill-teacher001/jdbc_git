@@ -1,0 +1,13 @@
+-- データベースの作成
+CREATE DATABASE test2024;
+
+-- テーブルの作成
+CREATE TABLE Members(
+id INT PRIMARY KEY,
+name TEXT
+);
+
+-- レコードの登録
+INSERT INTO Members VALUES(1, '山田太郎');
+INSERT INTO Members VALUES(2, '佐藤花子');
+INSERT INTO Members VALUES(3, '鈴木次郎');
