@@ -18,9 +18,9 @@ public class Sample01 {
 		}
 		
 		//データベース接続情報
-		String url = "jdbc:postgresql:データベース名";
-		String user = "ユーザ名";
-		String pass = "パスワード";
+		String url = "jdbc:postgresql:sample_db";
+		String user = "postgres";
+		String pass = "himitu";
 		
 		//実行のSQL文
 		String sql = "SELECT id, name FROM Members";		
