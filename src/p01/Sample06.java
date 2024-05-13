@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Sample04 {
+public class Sample06 {
 
 	public static void main(String[] args) {
 		//JDBCドライバの登録
@@ -23,42 +23,34 @@ public class Sample04 {
 		String user = "postgres";                //ユーザ名
 		String pass = "himitu";                  //パスワード
 		
-		String sql = "SELECT id, name, age FROM users";
-		
-		Connection con = null;
+		String _id = "' OR '100' = '100";
+		String sql = "SELECT id, name, age FROM users WHERE id = '" + _id + "'";
 		
 		//データベースへの接続
-		try {
+		try (
 			//正常にDBに接続された時に利用できるリモコンcon
-			con = DriverManager.getConnection(url, user, pass);
-			
+			Connection con = DriverManager.getConnection(url, user, pass);
+		) {			
 			//SQL文を実行する準備をする
 			PreparedStatement ps = con.prepareStatement(sql);
-			
+				
 			//SQLを実行して結果を取得する
 			ResultSet rs = ps.executeQuery();
 			
-			while(rs.next() == true) { //レコードがある回数繰り返す
+			if (rs.next() == true) { //レコードがあったら
 				//レコードの列のデータを取得する
 				String id = rs.getString("id"); //idの列のデータを取得
 				String name = rs.getString("name"); //nameの列のデータを取得
 				int age = rs.getInt("age"); //ageの列のデータを取得
 				
 				System.out.println(id + "\t" + name + "\t" + age);
+			} else {
+				System.out.println("指定したIDに該当するレコードがありません");
 			}
 			
 		} catch (SQLException e) {
 			System.out.println("データベース関連エラー");
 			e.printStackTrace();
-		} finally {
-			try {
-				if (con != null) {
-					con.close();				
-				}
-			} catch (SQLException e) {
-				System.out.println("データベース・クローズエラー");
-				e.printStackTrace();
-			}
 		}
 	}
 

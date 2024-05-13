@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Sample04 {
+public class Sample05 {
 
 	public static void main(String[] args) {
 		//JDBCドライバの登録
@@ -25,16 +25,14 @@ public class Sample04 {
 		
 		String sql = "SELECT id, name, age FROM users";
 		
-		Connection con = null;
-		
 		//データベースへの接続
-		try {
+		try (
 			//正常にDBに接続された時に利用できるリモコンcon
-			con = DriverManager.getConnection(url, user, pass);
-			
+			Connection con = DriverManager.getConnection(url, user, pass);
+		) {			
 			//SQL文を実行する準備をする
 			PreparedStatement ps = con.prepareStatement(sql);
-			
+				
 			//SQLを実行して結果を取得する
 			ResultSet rs = ps.executeQuery();
 			
@@ -50,15 +48,6 @@ public class Sample04 {
 		} catch (SQLException e) {
 			System.out.println("データベース関連エラー");
 			e.printStackTrace();
-		} finally {
-			try {
-				if (con != null) {
-					con.close();				
-				}
-			} catch (SQLException e) {
-				System.out.println("データベース・クローズエラー");
-				e.printStackTrace();
-			}
 		}
 	}
 
