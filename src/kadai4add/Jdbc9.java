@@ -27,10 +27,11 @@ public class Jdbc9 {
 		sql += "WHEN 30 <= age AND age < 40 THEN '３０代' ";
 		sql += "WHEN 40 <= age AND age < 50 THEN '４０代' ";
 		sql += "WHEN 50 <= age AND age < 60 THEN '５０代' ";
-		sql += "END ";
-		sql += ", count(*) AS count ";
+		sql += "END AS era, ";
+		sql += "count(*) AS count ";
 		sql += "FROM emp ";
-		sql += "GROUP BY  ";
+		sql += "GROUP BY era ";
+		sql += "ORDER BY era";
 		
 		//データベースへの接続
 		try (
@@ -43,15 +44,12 @@ public class Jdbc9 {
 			//SQLを実行して結果を取得する
 			ResultSet rs = ps.executeQuery();
 			
-			if (rs.next() == true) { //レコードがあれば
+			while (rs.next() == true) { //レコードがあれば
 				//レコードの列のデータを取得する
-				int min = rs.getInt("min"); //最小年齢を取得
-				int max = rs.getInt("max"); //最高年齢を取得
-				double avg = rs.getDouble("avg"); //平均年齢を取得
+				String era = rs.getString("era"); //年代を取得
+				int count = rs.getInt("count"); //年代別人数を取得
 				
-				System.out.println("年齢の最小は：" + min + "歳");
-				System.out.println("年齢の最大は：" + max + "歳");
-				System.out.println("年齢の平均は：" + avg + "歳");
+				System.out.println(era + "：" + count + "人");
 			}
 			
 		} catch (SQLException e) {
