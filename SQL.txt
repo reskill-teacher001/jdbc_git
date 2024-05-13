@@ -11,3 +11,16 @@ name TEXT
 INSERT INTO Members VALUES(1, '山田太郎');
 INSERT INTO Members VALUES(2, '佐藤花子');
 INSERT INTO Members VALUES(3, '鈴木次郎');
+
+
+SELECT CASE 
+WHEN 20 <= age AND age < 30 THEN '２０代'
+WHEN 30 <= age AND age < 40 THEN '３０代'
+WHEN 40 <= age AND age < 50 THEN '４０代'
+WHEN 50 <= age AND age < 60 THEN '５０代'
+END AS era, count(*)
+FROM emp
+GROUP BY era
+ORDER BY era
+;
+
