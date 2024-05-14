@@ -6,14 +6,14 @@ import java.sql.SQLException;
 
 public class DAO {
 	//接続情報の設定
-	private String url = "jdbc:postgresql:canon_db"; //接続するDB名
-	private String user = "postgres"; //ユーザ名
-	private String pass = "himitu"; //パスワード
+	private static final String URL = "jdbc:postgresql:canon_db"; //接続するDB名
+	private static final String USER = "postgres"; //ユーザ名
+	private static final String PASS = "himitu"; //パスワード
 	
 	protected Connection getConnect() throws ClassNotFoundException, SQLException {
 		Class.forName("org.postgresql.Driver");
 		
-		Connection con = DriverManager.getConnection(url, user, pass);
+		Connection con = DriverManager.getConnection(URL, USER, PASS);
 		
 		return con;
 	}
