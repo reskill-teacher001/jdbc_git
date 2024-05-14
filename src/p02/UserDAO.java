@@ -185,5 +185,36 @@ public class UserDAO extends DAO {
 
 		return check;
 	}
+	
+	//削除メソッド
+	public boolean delete(String id) throws DAOException {
+		boolean check = false;
+
+		String sql = "DELETE FROM users WHERE id = ?";
+
+		try (
+			//正常にDBに接続された時に利用できるリモコンcon
+			//Connection con = DriverManager.getConnection(url, user, pass);
+			Connection con = getConnect();
+		) {
+			//SQL文を実行する準備をする
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, id);
+
+			//SQLを実行して結果を取得する
+			int row = ps.executeUpdate();
+			
+			if (row == 1) {
+				check = true;
+			}
+
+		} catch (Exception e) {
+			throw new DAOException("データベース関連エラー");
+			//System.out.println("データベース関連エラー");
+			//e.printStackTrace();
+		}
+
+		return check;
+	}
 
 }
