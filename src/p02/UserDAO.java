@@ -1,36 +1,21 @@
 package p02;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public class UserDAO {
+public class UserDAO extends DAO {
 
 	//単一検索メソッド（idによる検索）
 	public User findById(String _id) throws DAOException {
 		User u = null;
 
-		//JDBCドライバの登録
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			throw new DAOException("JDBCドライバが登録されていません");
-			//System.out.println("JDBCドライバが登録されていません");
-			//e.printStackTrace();
-		}
-
-		//接続情報の設定
-		String url = "jdbc:postgresql:canon_db"; //接続するDB名
-		String user = "postgres"; //ユーザ名
-		String pass = "himitu"; //パスワード
-
 		String sql = "SELECT id, name, age FROM users WHERE id = ?";
 
 		try (
 			//正常にDBに接続された時に利用できるリモコンcon
-			Connection con = DriverManager.getConnection(url, user, pass);
+			//Connection con = DriverManager.getConnection(url, user, pass);
+			Connection con = getConnect();
 		) {
 			//SQL文を実行する準備をする
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -50,7 +35,7 @@ public class UserDAO {
 				u = new User(id, name, age);
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			throw new DAOException("データベース関連エラー");
 			//System.out.println("データベース関連エラー");
 			//e.printStackTrace();
