@@ -8,7 +8,14 @@ public class Sample02 {
 		UserDAO dao = new UserDAO();
 		
 		//findByIdメソッドの呼び出し
-		User u = dao.findById("01");
+		User u = null;
+		
+		try {
+			u = dao.findById("01");
+		} catch (DAOException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 
 		if (u != null) {
 			String id = u.getId();

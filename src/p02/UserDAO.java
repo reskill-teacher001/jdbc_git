@@ -9,15 +9,16 @@ import java.sql.SQLException;
 public class UserDAO {
 
 	//単一検索メソッド（idによる検索）
-	public User findById(String _id) {
+	public User findById(String _id) throws DAOException {
 		User u = null;
 
 		//JDBCドライバの登録
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
-			System.out.println("JDBCドライバが登録されていません");
-			e.printStackTrace();
+			throw new DAOException("JDBCドライバが登録されていません");
+			//System.out.println("JDBCドライバが登録されていません");
+			//e.printStackTrace();
 		}
 
 		//接続情報の設定
@@ -50,8 +51,9 @@ public class UserDAO {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("データベース関連エラー");
-			e.printStackTrace();
+			throw new DAOException("データベース関連エラー");
+			//System.out.println("データベース関連エラー");
+			//e.printStackTrace();
 		}
 
 		return u;
