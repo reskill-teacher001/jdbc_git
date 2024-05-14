@@ -60,9 +60,6 @@ public class UserDAO extends DAO {
 			//SQL文を実行する準備をする
 			PreparedStatement ps = con.prepareStatement(sql);
 
-			//プレースホルダの部分に値を設定する
-			ps.setString(1, _id);
-
 			//SQLを実行して結果を取得する
 			ResultSet rs = ps.executeQuery();
 
@@ -85,5 +82,38 @@ public class UserDAO extends DAO {
 		}
 
 		return users;
+	}
+	
+	//登録メソッド
+	public boolean insert(String id, String name, int age) throws DAOException {
+		boolean check = false;
+
+		String sql = "INSERT INTO users VALUES(?, ?, ?)";
+
+		try (
+			//正常にDBに接続された時に利用できるリモコンcon
+			//Connection con = DriverManager.getConnection(url, user, pass);
+			Connection con = getConnect();
+		) {
+			//SQL文を実行する準備をする
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.setString(2, name);
+			ps.setInt(3, age);
+
+			//SQLを実行して結果を取得する
+			int row = ps.executeUpdate();
+			
+			if (row == 1) {
+				check = true;
+			}
+
+		} catch (Exception e) {
+			throw new DAOException("データベース関連エラー");
+			//System.out.println("データベース関連エラー");
+			//e.printStackTrace();
+		}
+
+		return check;
 	}
 }
