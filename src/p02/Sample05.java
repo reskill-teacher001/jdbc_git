@@ -3,9 +3,6 @@ package p02;
 public class Sample05 {
 
 	public static void main(String[] args) {
-		String id = "07";
-		String name = "田中";
-		int age = 28;
 		
 		//UserDAOのインスタンスを生成
 		UserDAO dao = new UserDAO();
@@ -13,7 +10,7 @@ public class Sample05 {
 		boolean check = false;
 		
 		try {
-			check = dao.insert(id, name, age);
+			check = dao.insert(new User("08", "薄井", 29));
 		} catch (DAOException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
