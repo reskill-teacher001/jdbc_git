@@ -24,3 +24,20 @@ GROUP BY era
 ORDER BY era
 ;
 
+
+
+
+
+CREATE TABLE members (
+    code INTEGER PRIMARY KEY,
+    name TEXT,
+    age INTEGER,
+    tel TEXT
+);
+
+INSERT INTO members VALUES(1, '鈴木', 30, '03-1111-1111');
+INSERT INTO members VALUES(2, '佐藤', 28, '043-2222-2222');
+INSERT INTO members VALUES(3, '田中', 46, '05-3333-3333');
+INSERT INTO members VALUES(4, '山田', 57, '076-4444-4444');
+INSERT INTO members VALUES(5, '木村', 31, '076-5555-5555');
+
